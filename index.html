@@ -1,82 +1,59 @@
 <!DOCTYPE html>
-<html lang="id">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Pelacak Lokasi Akurat</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 50px;
-      background: #f9f9f9;
-    }
-    h1 {
-      color: #222;
-    }
-    #location {
-      font-size: 1.2em;
-      margin-top: 20px;
-    }
-    #status {
-      color: green;
-      margin-top: 20px;
-    }
-  </style>
+  <title>📍 Pelacak Lokasi Firebase</title>
+  <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-database.js"></script>
 </head>
-<body>
-  <h1>📍 Pelacak Lokasi Akurat</h1>
-  <p id="location">Sedang mendeteksi lokasi Anda...</p>
-  <p id="status"></p>
+<body style="font-family:sans-serif; text-align:center; padding:2rem;">
+  <h1>📍 Lokasi Anda</h1>
+  <p id="info">Mengambil lokasi...</p>
 
   <script>
-    const locationEl = document.getElementById('location');
-    const statusEl = document.getElementById('status');
+    // 🔁 Ganti dengan konfigurasi Firebase milik kamu
+    const firebaseConfig = {
+      apiKey: "API_KEY_KAMU",
+      authDomain: "PROJECT_ID.firebaseapp.com",
+      databaseURL: "https://PROJECT_ID.firebaseio.com",
+      projectId: "PROJECT_ID",
+      storageBucket: "PROJECT_ID.appspot.com",
+      messagingSenderId: "SENDER_ID",
+      appId: "APP_ID"
+    };
 
-    // Ganti URL ini dengan Web App Google Sheets kamu
-    const scriptURL = "https://script.google.com/macros/s/AKfycbzTzThVDS8nVmVfyjeq6SFrbP4RfvQfcUH1qeC_6X0hZjDOibi8FfDkkytv_r06v_SG/exec";
+    // Inisialisasi Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
 
-    let sent = false; // Agar hanya kirim 1x
+    const infoEl = document.getElementById('info');
 
-    function sendToSheet(lat, lon) {
-      if (sent) return; // Hanya kirim sekali
-      sent = true;
-
-      fetch(scriptURL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
-        },
-        body: `latitude=${lat}&longitude=${lon}&timestamp=${new Date().toISOString()}`
-      })
-      .then(response => response.text())
-      .then(result => {
-        statusEl.textContent = "Lokasi berhasil dikirim ke Google Sheets!";
-      })
-      .catch(err => {
-        statusEl.textContent = "Gagal mengirim lokasi: " + err.message;
+    function sendLocation(lat, lon) {
+      const now = new Date().toISOString();
+      db.ref("lokasi").push({
+        latitude: lat,
+        longitude: lon,
+        timestamp: now
+      }).then(() => {
+        infoEl.innerText = `✅ Lokasi berhasil dikirim:\nLat: ${lat}, Lon: ${lon}`;
+      }).catch(err => {
+        infoEl.innerText = "❌ Gagal kirim lokasi: " + err.message;
       });
     }
 
-    function success(position) {
-      const lat = position.coords.latitude.toFixed(6);
-      const lon = position.coords.longitude.toFixed(6);
-      locationEl.innerHTML = `Latitude: <b>${lat}</b><br>Longitude: <b>${lon}</b>`;
-      sendToSheet(lat, lon);
-    }
-
-    function error(err) {
-      locationEl.textContent = `❌ Gagal mendeteksi lokasi: ${err.message}`;
-    }
-
     if (navigator.geolocation) {
-      navigator.geolocation.watchPosition(success, error, {
+      navigator.geolocation.getCurrentPosition(pos => {
+        const lat = pos.coords.latitude.toFixed(6);
+        const lon = pos.coords.longitude.toFixed(6);
+        sendLocation(lat, lon);
+      }, err => {
+        infoEl.innerText = "❌ Gagal dapat lokasi: " + err.message;
+      }, {
         enableHighAccuracy: true,
         timeout: 10000,
         maximumAge: 0
       });
     } else {
-      locationEl.textContent = "Browser Anda tidak mendukung pelacakan lokasi.";
+      infoEl.innerText = "Browser tidak mendukung Geolocation.";
     }
   </script>
 </body>
