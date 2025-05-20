@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>📍 Pelacak Lokasi Firebase</title>
-  <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-database.js"></script>
+  <title>📍 Pelacak Lokasi</title>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 </head>
 <body style="font-family:sans-serif; text-align:center; padding:2rem;">
   <h1>📍 Lokasi Anda</h1>
   <p id="info">Mengambil lokasi...</p>
 
   <script>
-    const firebaseConfig = {
+    // Ganti dengan config kamu
+   const firebaseConfig = {
   apiKey: "AIzaSyAnI3-EDQr7OK8fHaeSSzAtLk9iR5sgbac",
   authDomain: "lokasiapi-2f434.firebaseapp.com",
   projectId: "lokasiapi-2f434",
@@ -18,7 +19,7 @@
   messagingSenderId: "875812427660",
   appId: "1:875812427660:web:5c4ce962244c47e18128a9"
 };
-
+    
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
@@ -26,11 +27,32 @@
 
     function sendLocation(lat, lon) {
       const now = new Date().toISOString();
-      console.log("Mengirim ke Firebase:", lat, lon);
       db.ref("lokasi").push({
         latitude: lat,
         longitude: lon,
         timestamp: now
       }).then(() => {
-        infoEl.innerText = `✅ Lokasi berhasil dikirim:\nLat: ${lat}, Lon: ${lon}`;
-      }).cat
+        infoEl.innerText = `✅ Lokasi dikirim:\nLat: ${lat}, Lon: ${lon}`;
+      }).catch(err => {
+        infoEl.innerText = "❌ Gagal kirim: " + err.message;
+      });
+    }
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(pos => {
+        const lat = pos.coords.latitude.toFixed(6);
+        const lon = pos.coords.longitude.toFixed(6);
+        sendLocation(lat, lon);
+      }, err => {
+        infoEl.innerText = "❌ Gagal lokasi: " + err.message;
+      }, {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0
+      });
+    } else {
+      infoEl.innerText = "Browser tidak dukung Geolocation.";
+    }
+  </script>
+</body>
+</html>
