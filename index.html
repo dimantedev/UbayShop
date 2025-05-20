@@ -43,18 +43,12 @@
       sent = true;
 
       fetch(scriptURL, {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: `latitude=${lat}&longitude=${lon}&timestamp=${new Date().toISOString()}`
-      })
-      .then(response => {
-        statusEl.textContent = "✅ Lokasi berhasil dikirim ke Google Sheets.";
-      })
-      .catch(error => {
-        statusEl.textContent = "❌ Gagal mengirim ke Google Sheets.";
-        console.error("Error:", error);
-      });
-    }
+  method: "POST",
+  headers: {
+    "Content-Type": "application/x-www-form-urlencoded"
+  },
+  body: `latitude=${lat}&longitude=${lon}&timestamp=${new Date().toISOString()}`
+})
 
     function success(position) {
       const lat = position.coords.latitude.toFixed(6);
