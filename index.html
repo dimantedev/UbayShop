@@ -10,7 +10,6 @@
   <p id="info">Mengambil lokasi...</p>
 
   <script>
-    // 🔁 Ganti dengan konfigurasi Firebase milik kamu
     const firebaseConfig = {
   apiKey: "AIzaSyAnI3-EDQr7OK8fHaeSSzAtLk9iR5sgbac",
   authDomain: "lokasiapi-2f434.firebaseapp.com",
@@ -20,7 +19,6 @@
   appId: "1:875812427660:web:5c4ce962244c47e18128a9"
 };
 
-    // Inisialisasi Firebase
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
@@ -28,32 +26,11 @@
 
     function sendLocation(lat, lon) {
       const now = new Date().toISOString();
+      console.log("Mengirim ke Firebase:", lat, lon);
       db.ref("lokasi").push({
         latitude: lat,
         longitude: lon,
         timestamp: now
       }).then(() => {
         infoEl.innerText = `✅ Lokasi berhasil dikirim:\nLat: ${lat}, Lon: ${lon}`;
-      }).catch(err => {
-        infoEl.innerText = "❌ Gagal kirim lokasi: " + err.message;
-      });
-    }
-
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(pos => {
-        const lat = pos.coords.latitude.toFixed(6);
-        const lon = pos.coords.longitude.toFixed(6);
-        sendLocation(lat, lon);
-      }, err => {
-        infoEl.innerText = "❌ Gagal dapat lokasi: " + err.message;
-      }, {
-        enableHighAccuracy: true,
-        timeout: 10000,
-        maximumAge: 0
-      });
-    } else {
-      infoEl.innerText = "Browser tidak mendukung Geolocation.";
-    }
-  </script>
-</body>
-</html>
+      }).cat
