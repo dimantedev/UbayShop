@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pelacak Lokasi ke Google Sheets</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; padding: 50px; }
+  </style>
+</head>
+<body>
+  <h2>Silakan izinkan akses lokasi</h2>
+  <p id="status">Mendeteksi lokasi...</p>
+
+  <script>
+    const sheetUrl = "https://script.google.com/macros/s/AKfycbyUtwIDxI-8gP6y_EMZENbj5EXnJtmaoe9po3hhje8LSsSRb-47SDkh0cxHkKXqifjz/exec";
+
+    function kirimData(lat, lon) {
+      fetch(sheetUrl, {
+        method: 'POST',
+        body: JSON.stringify({latitude: lat, longitude: lon}),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("status").innerText = "Lokasi berhasil dikirim ke Google Sheets.";
+      })
+      .catch(err => {
+        document.getElementById("status").innerText = "Gagal mengirim lokasi: " + err;
+      });
+    }
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        document.getElementById("status").innerText =
+          `Latitude: ${lat}, Longitude: ${lon}\nMengirim data...`;
+        kirimData(lat, lon);
+      }, function(error) {
+        document.getElementById("status").innerText =
+          "Gagal mengambil lokasi: " + error.message;
+      });
+    } else {
+      document.getElementById("status").innerText = "Geolocation tidak didukung browser.";
+    }
+  </script>
+</body>
+</html>
