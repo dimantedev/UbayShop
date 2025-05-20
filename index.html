@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Pelacak Lokasi</title>
+  <title>Pelacak Lokasi Akurat</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       text-align: center;
       padding: 50px;
-      background: #f0f0f0;
+      background: #f9f9f9;
     }
     h1 {
-      color: #333;
+      color: #222;
     }
     #location {
       font-size: 1.2em;
@@ -25,18 +25,23 @@
   </style>
 </head>
 <body>
-  <h1>📍 Pelacak Lokasi</h1>
-  <p id="location">Mengambil lokasi Anda...</p>
+  <h1>📍 Pelacak Lokasi Akurat</h1>
+  <p id="location">Sedang mendeteksi lokasi Anda...</p>
   <p id="status"></p>
 
   <script>
     const locationEl = document.getElementById('location');
     const statusEl = document.getElementById('status');
 
-    // Ganti URL ini dengan URL Web App dari Google Apps Script kamu
-    const scriptURL = "https://script.google.com/macros/s/AKfycbyUtwIDxI-8gP6y_EMZENbj5EXnJtmaoe9po3hhje8LSsSRb-47SDkh0cxHkKXqifjz/exec";
+    // Ganti URL ini dengan Web App Google Sheets kamu
+    const scriptURL = "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec";
+
+    let sent = false; // Agar hanya kirim 1x
 
     function sendToSheet(lat, lon) {
+      if (sent) return; // Hanya kirim sekali
+      sent = true;
+
       fetch(scriptURL, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -48,25 +53,4 @@
       .catch(error => {
         statusEl.textContent = "❌ Gagal mengirim ke Google Sheets.";
         console.error("Error:", error);
-      });
-    }
-
-    function success(position) {
-      const lat = position.coords.latitude;
-      const lon = position.coords.longitude;
-      locationEl.innerHTML = `Latitude: <b>${lat}</b><br>Longitude: <b>${lon}</b>`;
-      sendToSheet(lat, lon);
-    }
-
-    function error(err) {
-      locationEl.textContent = `Gagal mengambil lokasi: ${err.message}`;
-    }
-
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(success, error);
-    } else {
-      locationEl.textContent = "Geolocation tidak didukung oleh browser Anda.";
-    }
-  </script>
-</body>
-</html>
+      }
