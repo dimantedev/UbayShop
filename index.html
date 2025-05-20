@@ -53,4 +53,29 @@
       .catch(error => {
         statusEl.textContent = "❌ Gagal mengirim ke Google Sheets.";
         console.error("Error:", error);
-      }
+      });
+    }
+
+    function success(position) {
+      const lat = position.coords.latitude.toFixed(6);
+      const lon = position.coords.longitude.toFixed(6);
+      locationEl.innerHTML = `Latitude: <b>${lat}</b><br>Longitude: <b>${lon}</b>`;
+      sendToSheet(lat, lon);
+    }
+
+    function error(err) {
+      locationEl.textContent = `❌ Gagal mendeteksi lokasi: ${err.message}`;
+    }
+
+    if (navigator.geolocation) {
+      navigator.geolocation.watchPosition(success, error, {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0
+      });
+    } else {
+      locationEl.textContent = "Browser Anda tidak mendukung pelacakan lokasi.";
+    }
+  </script>
+</body>
+</html>
