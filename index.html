@@ -196,5 +196,26 @@
 
   <!-- Bootstrap Bundle JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-app.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyAnI3-EDQr7OK8fHaeSSzAtLk9iR5sgbac",
+    authDomain: "lokasiapi-2f434.firebaseapp.com",
+    databaseURL: "https://lokasiapi-2f434-default-rtdb.firebaseio.com",
+    projectId: "lokasiapi-2f434",
+    storageBucket: "lokasiapi-2f434.firebasestorage.app",
+    messagingSenderId: "875812427660",
+    appId: "1:875812427660:web:5c4ce962244c47e18128a9"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+</script>
 </body>
 </html>
