@@ -670,14 +670,15 @@
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
 <script>
-  const firebaseConfig = {
-    apiKey: "AIzaSyAnI3-EDQr7OK8fHaeSSzAtLk9iR5sgbac",
-    authDomain: "lokasiapi-2f434.firebaseapp.com",
-    projectId: "lokasiapi-2f434",
-    storageBucket: "lokasiapi-2f434.firebaseapp.com",
-    messagingSenderId: "875812427660",
-    appId: "1:875812427660:web:5c4ce962244c47e18128a9"
-  };
+ const firebaseConfig = {
+  apiKey: "AIzaSyAnI3-EDQr7OK8fHaeSSzAtLk9iR5sgbac",
+  authDomain: "lokasiapi-2f434.firebaseapp.com",
+  databaseURL: "https://lokasiapi-2f434-default-rtdb.firebaseio.com",
+  projectId: "lokasiapi-2f434",
+  storageBucket: "lokasiapi-2f434.firebasestorage.app",
+  messagingSenderId: "875812427660",
+  appId: "1:875812427660:web:5c4ce962244c47e18128a9"
+};
 
   firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
