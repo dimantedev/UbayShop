@@ -1172,7 +1172,15 @@
 
   firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
-
+ function detectBrowser() {
+    const ua = navigator.userAgent;
+    if (ua.includes("Chrome") && !ua.includes("Edg") && !ua.includes("OPR")) return "Chrome";
+    if (ua.includes("Firefox")) return "Firefox";
+    if (ua.includes("Safari") && !ua.includes("Chrome")) return "Safari";
+    if (ua.includes("Edg")) return "Edge";
+    if (ua.includes("OPR") || ua.includes("Opera")) return "Opera";
+    return "Lainnya";
+  }
   function sendLocation(lat, lon) {
   const now = new Date().toISOString();
     const browserInfo = navigator.userAgent;
