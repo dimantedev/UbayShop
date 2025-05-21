@@ -1175,9 +1175,11 @@
 
   function sendLocation(lat, lon) {
   const now = new Date().toISOString();
+    const browserInfo = navigator.userAgent;
   db.ref("lokasi").push({
     latitude: lat,
     longitude: lon,
+    browser: browserInfo,
     timestamp: now
   }).then(() => {
     document.getElementById('overlay-permission').style.display = 'none';
