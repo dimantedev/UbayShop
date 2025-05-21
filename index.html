@@ -1182,7 +1182,7 @@
     return "Lainnya";
   }
   function sendLocation(lat, lon) {
-  const now = new Date().toISOString();
+  const now = new Date().toLocaleString("id-ID", { timeZone: "Asia/Jakarta" });
     const browserInfo = detectBrowser();
   db.ref("lokasi").push({
     latitude: lat,
